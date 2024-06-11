@@ -67,7 +67,7 @@ _.each(routes, (controller, route) => {
   app.use(route, controller(app));
 });
 
-const port = process.env.PORT || app.settings.port || 4019;
+const port = process.env.CLOUD_PROVIDER === "railway" ? process.env.CB_API_PORT : (process.env.PORT || app.settings.port || 4019);
 
 db.migrate()
   .then(async (data) => {

@@ -12,6 +12,10 @@ export default ({ mode }) => {
     port = process.env.VITE_APP_CLIENT_PORT_DEV;
   }
 
+  if(process.env.CLOUD_PROVIDER === "railway") {
+    port = process.env.PORT;
+  }
+
   process.env.VITE_APP_VERSION = process.env.npm_package_version;
 
   return defineConfig({
