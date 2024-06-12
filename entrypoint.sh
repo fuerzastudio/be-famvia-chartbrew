@@ -6,11 +6,13 @@ export VITE_APP_CLIENT_HOST=${VITE_APP_CLIENT_HOST}
 export VITE_APP_CLIENT_PORT=${VITE_APP_CLIENT_PORT}
 export VITE_APP_ONE_ACCOUNT_EXTERNAL_ID=${VITE_APP_ONE_ACCOUNT_EXTERNAL_ID}
 
-if [ "$CLOUD_PROVIDER" = "railway" ]; then
-  if [ "$APP_TO_DEPLOY" = "server" ]; then
+if [ "${CLOUD_PROVIDER}" = "railway" ]; then
+  echo "Running on Railway..."
+  if [ "${APP_TO_DEPLOY}" = "server" ]; then
     cd server
-    NODE_ENV=production nohup node index.js &
-  elif [ "$APP_TO_DEPLOY" = "client" ]; then
+    NODE_ENV=production nohup node index.js
+  elif [ "${APP_TO_DEPLOY}" = "client" ]; then
+    echo "Deploying client..."
     cd client
     # Build the UI in the background
     nohup sh -c 'echo "The UI is rebuilding. Please wait..." && npm run build && echo "UI built successfully!"' &
@@ -18,6 +20,7 @@ if [ "$CLOUD_PROVIDER" = "railway" ]; then
     npm run preview
   fi
 else
+  echo "Running locally..."
   cd server
   NODE_ENV=production nohup node index.js &
 
